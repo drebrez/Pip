@@ -33,5 +33,8 @@ namespace Pip.Configuration
 
         [DefaultValue("Client area only")]
         string ClientAreaOnly { get; }
+
+        [DefaultValue("Pip started")]
+        string StartupReadyToast { get; }
     }
 }

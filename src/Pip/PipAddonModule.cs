@@ -21,6 +21,7 @@
 
 using Autofac;
 using Autofac.Features.AttributeFilters;
+using Caliburn.Micro;
 using Dapplo.Addons;
 using Dapplo.CaliburnMicro.Configuration;
 using Dapplo.CaliburnMicro.Menu;
@@ -132,6 +133,15 @@ namespace Pip
             builder
                 .RegisterType<ErrorViewModel>()
                 .AsSelf();
+
+            builder
+                .RegisterType<StartupReadyToastViewModel>()
+                .AsSelf();
+
+            builder.RegisterType<EventAggregator>()
+                .As<IEventAggregator>()
+                .IfNotRegistered(typeof(IEventAggregator))
+                .SingleInstance();
         }
     }
 }

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
+using Autofac.Features.OwnedInstances;
+using Caliburn.Micro;
 using Dapplo.Addons;
 using Dapplo.Windows.Desktop;
 using Dapplo.Windows.Input.Keyboard;
 using Pip.Configuration;
 using Pip.Ui;
+using Pip.Ui.ViewModels;
 
 namespace Pip.Modules
 {
@@ -17,10 +20,19 @@ namespace Pip.Modules
         private readonly LocationPool _locationPool;
         private readonly Dictionary<IntPtr, ThumbnailForm> _thumbnailForms = new Dictionary<IntPtr, ThumbnailForm>();
 
-        public PipService(IPipConfiguration pipConfiguration, LocationPool locationPool)
+        private readonly IEventAggregator _eventAggregator;
+        private readonly Func<Owned<StartupReadyToastViewModel>> _startupReadyToastViewModelFactory;
+
+        public PipService(
+            IPipConfiguration pipConfiguration,
+            LocationPool locationPool,
+            IEventAggregator eventAggregator,
+            Func<Owned<StartupReadyToastViewModel>> startupReadyToastViewModelFactory)
         {
             _pipConfiguration = pipConfiguration;
             _locationPool = locationPool;
+            _eventAggregator = eventAggregator;
+            _startupReadyToastViewModelFactory = startupReadyToastViewModelFactory;
         }
         public void Startup()
         {
@@ -62,6 +74,28 @@ namespace Pip.Modules
                 _thumbnailForms[pipSource.Handle] = thumbnailForm;
                 thumbnailForm.Show();
             });
+
+            var message = _startupReadyToastViewModelFactory();
+            // Prepare to dispose the view model parts automatically if it's finished
+            EventHandler<DeactivationEventArgs> disposeHandler = null;
+            disposeHandler = (sender, args) =>
+            {
+                message.Value.Deactivated -= disposeHandler;
+                message.Dispose();
+            };
+            message.Value.Deactivated += disposeHandler;
+
+            // Show the ViewModel as toast 
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
+            _eventAggregator.PublishOnCurrentThread(message.Value);
         }
     }
 }
