@@ -7,24 +7,27 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance viewModels:PipConfigViewModel,IsDesignTimeCreatable=False}">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
+    <Grid>
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-		<Label Content="{Binding PipTranslations.Title}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+        <Label Content="{Binding PipTranslations.Title}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
 
-		<CheckBox Content="{Binding PipTranslations.ClientAreaOnly}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-		          IsChecked="{Binding PipConfiguration.SourceClientAreaOnly}" />
+        <CheckBox Content="{Binding PipTranslations.ClientAreaOnly}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                  IsChecked="{Binding PipConfiguration.SourceClientAreaOnly}" />
 
         <Label Content="{Binding PipTranslations.Opacity}" Grid.Row="2" Grid.Column="0" />
         <Slider Grid.Row="2" Grid.Column="1" Maximum="255" Minimum="10" Value="{Binding PipConfiguration.Opacity}" SmallChange="10" LargeChange="20" />
-	</Grid>
+
+        <Label Content="Hotkey" Grid.Row="3" Grid.Column="0" />
+        <TextBox x:Name="Hotkey" Grid.Row="3" Grid.Column="1" />
+    </Grid>
 </UserControl>
